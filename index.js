@@ -1,6 +1,7 @@
-//deoendecies
+//dependencies
 const inquirer = require('inquirer')
 const fs = require('fs')
+
 //heres the readme questions
 const readmeQuestions = () =>
     inquirer.prompt([
@@ -50,46 +51,55 @@ const readmeQuestions = () =>
         message: "What's your/teams email-adress?",
         name: "email",
     },
+    {
+        type: "input",
+        message: "Were there any contributors to the project?",
+        name: "contribute",
+    },
 ]);
 //heres the function that creates the actualy read me document
 function readmeCreator(answers){
     //readme being created
 return`# ${answers.title}
-
+---
 ## Table of Contents:
 * [Description](#description)
 * [Installation](#installation)
 * [Usage](#usage)
 * [License](#license)
 * [Creators](#creators)
-
+* [Contributing](#contributing)
+---
 ## Description:
 ${answers.description}
-
+---
 ## Installation:
 In order to run this project follows these instructions please!:
 \`\`\`${answers.installations}\`\`\`
-
+---
 ## Usage:
 ${answers.usage}
-
+---
 ## License:
  ${answers.license}
-
+ ---
 ## Tests:
 ${answers.tests}
-
+---
 ## Creators:
 *Feel free to contact me for any questions!
 *Name(s): ${answers.creators}
 *Email(s): ${answers.email}
 *Github: [GitHub](https://github.com/${answers.username})
+---
+## Contributing:
+${answers.contribute}
 `
 }
-//herse the readme all being made with the functions being called
+//heres the readme all being made with the functions being called
 readmeQuestions()
 .then((answers) => {
-fs.writeFile(`README.md`, readmeCreator(answers),
+fs.writeFile(`${answers.title}.md`, readmeCreator(answers),
     (err) => {
         err ? console.error(err) : console.log('ReadME created succesfully, YAY!')
     })}
